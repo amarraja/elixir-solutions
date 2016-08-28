@@ -1,19 +1,12 @@
 defmodule Flattener do
 
-  def flatten(list) do
-    do_flatten(list)
-  end
-
-  def do_flatten([h | t]) do
+  def flatten([]), do: []
+  def flatten([h | t]) do
     if is_list(h) do
-      do_flatten(h) ++ do_flatten(t)
+      flatten(h) ++ flatten(t)
     else
-      [h | do_flatten(t)]
+      [h | flatten(t)]
     end
-  end
-
-  def do_flatten([]) do
-    []
   end
 
 end
