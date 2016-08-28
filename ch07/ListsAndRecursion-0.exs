@@ -21,22 +21,18 @@ defmodule MyList do
   def max_no_reduce([x]), do: x
   def max_no_reduce([h | t]), do: Kernel.max(h, max(t))
 
-  def cesar(text, shift) do
-    z = ?z
-    a = ?a
+  def cesar([], _), do: []
 
-    IO.puts "z: #{z}, a: #{a}"
+  def cesar([head | tail], shift) do
+    [_translate_char(head + shift) | cesar(tail, shift)]
+  end
 
-    translator = fn chr ->
-      newchr = chr + shift
-      if newchr > z do
-        newchr = a + (newchr - z - 1)
-      end
-      IO.puts "chr: #{chr}, newchr: #{newchr}"
-      newchr
-    end
+  def _translate_char(chr) when chr > ?z do
+    ?a + (chr - ?z - 1)
+  end
 
-    map(text, translator)
+  def _translate_char(chr) do
+    chr
   end
 
 end
