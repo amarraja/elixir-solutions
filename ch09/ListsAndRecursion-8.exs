@@ -9,6 +9,17 @@ defmodule Taxman do
     end
   end
 
+  def apply_tax_2(order, rates) do
+    order |> Enum.map &(order_with_tax(&1, rates))
+  end
+
+  defp order_with_tax(order, rates) do
+    rate = Keyword.get(rates, order[:ship_to], 0)
+    net = order[:net_amount]
+    total = net + (net * rate)
+    order ++ [total_amount: total]
+  end
+
 end
 
 tax_rates = [ NC: 0.075, TX: 0.08 ]
@@ -23,3 +34,4 @@ orders = [
     [ id: 120, ship_to: :NC, net_amount:  50.00 ] ]
 
 IO.inspect Taxman.apply_tax orders, tax_rates
+IO.inspect Taxman.apply_tax_2 orders, tax_rates
