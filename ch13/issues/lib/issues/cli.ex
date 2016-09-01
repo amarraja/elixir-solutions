@@ -1,7 +1,7 @@
 defmodule Issues.CLI do
   import Issues.TableFormatter, only: [format_table: 2]
 
-  def run(argv) do
+  def main(argv) do
     argv
     |> parse_args
     |> process
