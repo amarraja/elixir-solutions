@@ -1,4 +1,5 @@
 defmodule Issues.GithubIssues do
+  require Logger
 
   def fetch(user, project) do
     issues_url(user, project)
@@ -8,7 +9,9 @@ defmodule Issues.GithubIssues do
 
   @github_url Application.get_env(:issues, :github_url)
   defp issues_url(user, project) do
-    "#{@github_url}/repos/#{user}/#{project}/issues"
+    url = "#{@github_url}/repos/#{user}/#{project}/issues"
+    Logger.info "Hitting: #{url}"
+    url
   end
 
   defp handle_response(%{ status_code: 200, body: body }) do
