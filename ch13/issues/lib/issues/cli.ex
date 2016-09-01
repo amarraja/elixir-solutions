@@ -1,4 +1,6 @@
 defmodule Issues.CLI do
+  import Issues.TableFormatter, only: [format_table: 2]
+
   def run(argv) do
     argv
     |> parse_args
@@ -12,6 +14,7 @@ defmodule Issues.CLI do
     |> convert_to_maps
     |> sort_ascending
     |> Enum.take(count)
+    |> format_table(["number", "created_at", "title"])
   end
 
   def decode_response({:ok, body}), do: body
